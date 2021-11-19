@@ -1,38 +1,37 @@
 import tkinter as TK
-from tkinter import font
+from tkinter import Button, Tk, font
 
 root = TK.Tk()
 root.title("TicTacToe")
 
+squares = []
+
 def b_click(btn):
-    global clicked, count
+    squares[btn].click(1)
 
-clicked = True
-count = 0
-
-
-#Buttons
-b1 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b1))
-b2 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b2))
-b3 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b3))
-b4 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b4))
-b5 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b5))
-b6 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b6))
-b7 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b7))
-b8 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b8))
-b9 = TK.Button(root, text=" ", font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(b9))
-
-b1.grid(row=0, column=0)
-b2.grid(row=0, column=1)
-b3.grid(row=0, column=2)
-b4.grid(row=1, column=0)
-b5.grid(row=1, column=1)
-b6.grid(row=1, column=2)
-b7.grid(row=2, column=0)
-b8.grid(row=2, column=1)
-b9.grid(row=2, column=2)
+class square():
+    def __init__(self, i):
+        self.textvar = TK.StringVar()
+        self.button = TK.Button(root, textvariable=self.textvar, font=("Arial", 20), height=3, width=6, bg="SystemButtonFace", command=lambda: b_click(i))
+        self.clicked = 0
+    def click(self, clicker):
+        self.clicked = clicker
+        self.textvar.set("X" if clicker == 1 else "O")
 
 
+
+for i in range(9):
+    squares.append(square(i))
+
+column_num = 0
+row = 0
+
+for square in squares:
+    if column_num > 2:
+        row += 1
+        column_num = 0
+    square.button.grid(row = row, column = column_num)
+    column_num += 1
 
 frm = TK.Frame(root)
 frm.grid()
